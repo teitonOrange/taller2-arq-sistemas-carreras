@@ -1,6 +1,6 @@
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://nicolasgonzalez:2iCDa7P6dp5OMkbr@careers-microservice.fs90t.mongodb.net/careers-microservice?retryWrites=true&w=majority"
+  url      = env("DATABASE_URL")
 }
 generator client {
   provider = "prisma-client-js"
