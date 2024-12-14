@@ -6,6 +6,17 @@ export class CareerService {
     constructor(private prisma: PrismaService) {}
 
     async findAll(){
-        return await this.prisma.career.findMany();
+        const careers =  await this.prisma.career.findMany(
+            {
+                select: {
+                    name: true
+                }
+            }
+        );
+
+        return {
+            careers,
+        }
+
     }
 }
