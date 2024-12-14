@@ -1,4 +1,4 @@
-import { tr } from '@faker-js/faker/.';
+import { de, tr } from '@faker-js/faker/.';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -23,6 +23,50 @@ export class SubjectService {
         return {
             subjects,
         }
+    }
+    async findMapObjects(){
+        const subjectsRelations = await this.prisma.requisiteRelationship.findMany(
+            {
+                
+                select:{
+                    id: true,
+                    subject: {
+                        select: {
+                            code: true,
+                            name: true,
+                            department: true,
+                            credits: true,
+                            semester: true,
+                            id: true,
+                        }
+                    },
+                    prerequisite: {
+                        select: {
+                            code: true,
+                            name: true,
+                            department: true,
+                            credits: true,
+                            semester: true,
+                            id: true,
+                        }
+                    },
+                                 
+                }
+            }
+        )
+            
+        return {
+            requisiteRelationships: subjectsRelations.map((subject) => {
+                return {
+                    subjectCode: subject.subject.code,
+                    preSubjectCode: subject.prerequisite.code,
+                    department: subject.subject.department,
+                    id: subject.id,
+
+                }
+            })
+        }
+        
     }
 
     async findPreRequisite(){
