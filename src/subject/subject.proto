@@ -26,6 +26,8 @@ message SubjectList {
 message RequisiteRelationship{
     string subjectCode = 1;
     string preSubjectCode = 2;
+    string id = 3;
+    string department = 4;
 }
 
 message RequisiteRelationshipList{
