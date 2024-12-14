@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package subject;
+
+service SubjectService {
+    rpc FindMany (Empty) returns (SubjectList);
+    rpc FindMapObjects (Empty) returns (RequisiteRelationshipList);
+    rpc FindPreRequisite (Empty) returns (SubjectPreRequisiteList);
+    rpc FindPostRequisite (Empty)  returns (SubjectPostRequisiteList);
+}
+
+message Subject {
+    
+    string code = 1;
+    string name = 2;
+    string department = 3;
+    string credits = 4;
+    string semester = 5;
+    string id = 6;
+}
+
+message SubjectList {
+    repeated Subject subjects = 1;
+}
+
+message RequisiteRelationship{
+    string subjectCode = 1;
+    string preSubjectCode = 2;
+}
+
+message RequisiteRelationshipList{
+    repeated RequisiteRelationship requisiteRelationships = 1;
+}
+
+message SubjectPreRequisite {
+    string subjectCode = 1;
+    repeated string preRequisiteCodes = 2;
+}
+
+message SubjectPreRequisiteList {
+    repeated SubjectPreRequisite subjectPreRequisites = 1;
+}
+
+message SubjectPostRequisite {
+    string subjectCode = 1;
+    repeated string postRequisiteCodes = 2;
+}
+
+message SubjectPostRequisiteList {
+    repeated SubjectPostRequisite subjectPostRequisites = 1;
+}
+
+message Empty {}

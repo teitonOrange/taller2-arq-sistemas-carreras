@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package career;
+
+service CareerService {
+    rpc FindMany (Empty) returns (CareerList);
+}
+
+message Career {
+    string name = 1;
+}
+
+message CareerList {
+    
+    repeated Career careers = 1;
+}
+
+message Empty {}
