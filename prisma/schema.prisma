@@ -1,0 +1,57 @@
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://nicolasgonzalez:2iCDa7P6dp5OMkbr@careers-microservice.fs90t.mongodb.net/careers-microservice?retryWrites=true&w=majority"
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+/// Modelo de Subject (Asignatura)
+model Subject {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId // Id de MongoDB
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  version       Int      @default(1)
+
+  code          String   @unique 
+  name          String   
+  department    String   
+  credits       Int
+  semester      Int
+
+  // Relación con las asignaturas que esta asignatura habilita
+  postrequisites RequisiteRelationship[] @relation("SubjectAsPostrequisite")
+
+  // Relación con las asignaturas que esta asignatura tiene como prerrequisito
+  prerequisites  RequisiteRelationship[] @relation("SubjectAsPrerequisite")
+
+}
+
+model RequisiteRelationship {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId // Id de MongoDB
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+  version        Int      @default(1)
+
+  
+  // Relación con la asignatura que tiene el prerrequisito
+  subject        Subject? @relation("SubjectAsPostrequisite", fields: [subjectId], references: [id]) 
+  subjectId      String?   @db.ObjectId
+  
+  // Relación con la asignatura que actúa como prerrequisito
+  prerequisite   Subject?  @relation("SubjectAsPrerequisite", fields: [prerequisiteId], references: [id]) 
+  prerequisiteId String?   @db.ObjectId
+}
+
+model Career {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId // Id de MongoDB
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+  version        Int      @default(1) 
+
+  name          String   @unique 
+}
