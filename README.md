@@ -30,7 +30,8 @@ Primero, clona el repositorio y ejecuta el siguiente comando para instalar las d
     $ npm install
     $ npm install dotenv
     $ npm run build
-    $ npm prisma generate
+    $ npx prisma generate
+    $ npx prisma db push 
 
 ## Compilación y Ejecución
 
